@@ -4,11 +4,16 @@ var someCardsApp = {
         names: ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"],
         suits: ["hearts", "diamonds", "clubs", "spades"]
     },
-    deck: [],
-    currentHand: [],
+    deck: null,
+    currentHand: null,
     htmlTargets: {
+        items: someCardsAppTargets.items,
         status: someCardsAppTargets.status
     },
+    htmlTemplates: {
+        card: someCardsAppTemplates.card
+    },
+    status: "no data",
     getRandomInt: function (min, max) {
         "use strict";
         // Returns a random number <int>.
@@ -119,37 +124,50 @@ var someCardsApp = {
 
         return hand;
     },
-    render: function (targets, data) {
-        var html = '';
+    renderCard: function (target, template, card) {
+        "use strict";
+        var html = null;
+        html = template.replace("%name%", card.name);
+        html = html.replace("%suit%", card.suit);
+        target[0].innerHTML += html;
+        // console.log(target[0]);
+    },
+    renderHand: function (target, template, hand) {
+        // Renders the HTML template and card data.
+        // Takes in the html target <obj>,
+        // template <str>, and current hand <obj>.
+        // Returns false;
+        "use strict";
+        var len = hand.length;
         var index = 0;
-        var len = data.length;
+        var card = null;
 
-        // generate the html
-        // while (index < len) {
+        while (index < len) {
+            card = hand[index];
+            this.renderCard(target, template, card);
+            index += 1;
+        }
 
-        // }
-
-        // targets.status.appendChild(html);
+        return false;
     },
     init: function () {
         "use strict";
-        var card = this.generateCard(this.cards);
-        console.log(card);
-
         // define the deck of cards
         this.deck = this.generateDeck(this.cards.deckSize);
 
-        console.log(this.deck);
-
         // define the current hand
-        this.currentHand = this.generateHand(this.deck, 7);
-        console.log(this.currentHand);
+        this.currentHand = this.generateHand(this.deck, 5);
 
-        // this.render(this.htmlTargets, this.currentHand);
+        // hide the status message
+        if (this.currentHand !== null) {
+            this.htmlTargets.status.style.visibility = "hidden";
+        }
+
+        this.renderHand(this.htmlTargets.items, this.htmlTemplates.card, this.currentHand);
 
         // NOTE: the cards should really shuffle and
-        // utilize a stack logic to simulate real play.
-        // In this case, each hand is generate from a random
+        // utilize stack logic to simulate real play.
+        // In this case, each hand is generated from a random
         // selection of cards from the deck.
     }
 };
