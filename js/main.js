@@ -154,8 +154,9 @@ var someCardsApp = {
         // template <str>, and card <obj>.
         // Returns false;
         var html = null;
-        html = template.replace("%name%", card.name);
-        html = html.replace("%suit%", card.suit);
+
+        html = template.replace(/%name%/gi, card.name);
+        html = html.replace(/%suit%/gi, card.suit);
         target.innerHTML += html;
         return false;
     },

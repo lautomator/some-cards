@@ -15,7 +15,7 @@
             </form>
         </div>
         <hr>
-        <div id="items"></div>
+        <div id="items" class="grid-wrapper"></div>
     </div>
 
     <script type="text/javascript">
@@ -31,7 +31,7 @@
             script: document.createElement("script")
         };
         var someCardsAppTemplates = {
-            card: '<div class="card"><div class="name">%name%</div><div class="suit">%suit%</div></div>'
+            card: '<div class="card"><div class="name cn-%name%">%name%</div><div class="suit cs-%suit%">%suit%</div></div>'
         };
 
         // load styles and scripts
