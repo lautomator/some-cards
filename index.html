@@ -2,24 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Cards</title>
+    <title>Some Cards</title>
 </head>
 <body>
     <div class="wrapper">
-        <div class="items"><span id="status">No information to display.</span></div>
+        <p id="status">How many cards do you want?</p>
+        <div class="control-panel">
+            <form method="GET" action="/">
+                <input id="noOfCardsIn" type="number" name="no_of_cards" placeholder="Number of cards" required>
+                <input type="submit" value="deal">
+                <input id="reset" type="button" value="reset">
+            </form>
+        </div>
+        <hr>
+        <div id="items"></div>
     </div>
 
     <script type="text/javascript">
         var someCardsAppTargets = {
-            items: document.getElementsByClassName("items"),
-            status: document.getElementById("status")
+            ver: Math.random(),
+            items: document.getElementById("items"),
+            status: document.getElementById("status"),
+            noOfCardsIn: document.getElementById("noOfCardsIn"),
+            reset: document.getElementById("reset"),
+            headEl: document.getElementsByTagName("head"),
+            link: document.createElement("link"),
+            bodyEl: document.getElementsByTagName("body"),
+            script: document.createElement("script")
         };
         var someCardsAppTemplates = {
             card: '<div class="card"><div class="name">%name%</div><div class="suit">%suit%</div></div>'
         };
-    </script>
 
-    <script type="text/javascript" src="main.js"></script>
+        // load styles and scripts
+        someCardsAppTargets.link.rel = "stylesheet";
+        someCardsAppTargets.link.type = "text/css";
+        someCardsAppTargets.link.href = "style.css?v=" + someCardsAppTargets.ver;
+        someCardsAppTargets.headEl[0].appendChild(someCardsAppTargets.link);
+        someCardsAppTargets.script.src = "main.js?v=" + someCardsAppTargets.ver;
+        someCardsAppTargets.bodyEl[0].appendChild(someCardsAppTargets.script);
+    </script>
 </body>
 </html>
 

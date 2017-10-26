@@ -8,7 +8,9 @@ var someCardsApp = {
     currentHand: null,
     htmlTargets: {
         items: someCardsAppTargets.items,
-        status: someCardsAppTargets.status
+        status: someCardsAppTargets.status,
+        reset: someCardsAppTargets.reset,
+        noOfCardsIn: someCardsAppTargets.noOfCardsIn
     },
     htmlTemplates: {
         card: someCardsAppTemplates.card
@@ -101,7 +103,7 @@ var someCardsApp = {
         var card = {};
 
         // ensure the number of cards is valid
-        if (noOfCards < 1 || noOfCards > len) {
+        if (noOfCards < 1 || noOfCards > len + 1) {
             noOfCards = 5; // fallback
         } else {
             // adjustment for 0 index
@@ -124,20 +126,45 @@ var someCardsApp = {
 
         return hand;
     },
+    getFormInput: function (q) {
+        "use strict";
+        // Parses any form input.
+        // Takes in the query string <str>.
+        // Returns the params <obj>.
+        var result = q.split("&");
+        var params = {
+            numberOfCards: null
+            // could be more params
+        };
+        var index = 0;
+        var len = result.length;
+        var getItems = null;
+
+        while (index < len) {
+            getItems = result[index].split("=");
+            params.numberOfCards = getItems[1];
+            index += 1;
+        }
+        return params;
+    },
     renderCard: function (target, template, card) {
         "use strict";
+        // Renders card html <str>.
+        // Takes in the html target <obj>,
+        // template <str>, and card <obj>.
+        // Returns false;
         var html = null;
         html = template.replace("%name%", card.name);
         html = html.replace("%suit%", card.suit);
-        target[0].innerHTML += html;
-        // console.log(target[0]);
+        target.innerHTML += html;
+        return false;
     },
     renderHand: function (target, template, hand) {
+        "use strict";
         // Renders the HTML template and card data.
         // Takes in the html target <obj>,
         // template <str>, and current hand <obj>.
         // Returns false;
-        "use strict";
         var len = hand.length;
         var index = 0;
         var card = null;
@@ -150,20 +177,38 @@ var someCardsApp = {
 
         return false;
     },
+    reset: function (t) {
+        "use strict";
+        // clear
+        t.items.innerHTML = "";
+        t.status.style.visibility = "visible";
+    },
     init: function () {
         "use strict";
-        // define the deck of cards
-        this.deck = this.generateDeck(this.cards.deckSize);
+        // Set min/max number of cards that can be
+        // be entered on the form. Sets the max and
+        // min attributes.
+        this.htmlTargets.noOfCardsIn.setAttribute("min", "1");
+        this.htmlTargets.noOfCardsIn.setAttribute("max", this.cards.deckSize);
 
-        // define the current hand
-        this.currentHand = this.generateHand(this.deck, 5);
+        // retrieve any GET params
+        if (window.location.search !== "") {
+            // process the form data
+            var handSize = this.getFormInput(window.location.search.substr(1));
 
-        // hide the status message
-        if (this.currentHand !== null) {
-            this.htmlTargets.status.style.visibility = "hidden";
+            // define the deck of cards
+            this.deck = this.generateDeck(this.cards.deckSize);
+
+            // define the current hand
+            this.currentHand = this.generateHand(this.deck, handSize.numberOfCards);
+
+            // hide the status message
+            if (this.currentHand !== null) {
+                this.htmlTargets.status.style.visibility = "hidden";
+            }
+
+            this.renderHand(this.htmlTargets.items, this.htmlTemplates.card, this.currentHand);
         }
-
-        this.renderHand(this.htmlTargets.items, this.htmlTemplates.card, this.currentHand);
 
         // NOTE: the cards should really shuffle and
         // utilize stack logic to simulate real play.
@@ -172,4 +217,11 @@ var someCardsApp = {
     }
 };
 
+// init
 someCardsApp.init();
+
+// events
+someCardsApp.htmlTargets.reset.addEventListener("click", function () {
+    "use strict";
+    someCardsApp.reset(someCardsApp.htmlTargets);
+}, false);
