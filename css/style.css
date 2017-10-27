@@ -21,13 +21,16 @@ body {
 .card-table {
     background-image: url("../img/bg-green-felt.jpg?v=20171027-2");
     background-repeat: repeat;
-    min-height: 500px;
+    min-height: 205px;
     width: 100%;
 }
 
 .card {
-    background: no-repeat -5px -5px/1394% url("../img/cards.png");
+    /*background: no-repeat -5px -5px/1394% url("../img/cards.png");*/
     background-color: #ffffff;
+    background-image: url("../img/cards.png");
+    background-size: 1394%;
+    background-repeat: no-repeat;
     border: 1px dotted #000;
     border-radius: 4px;
     height: 175px;
@@ -46,20 +49,12 @@ body {
         width: 100%;
     }
 
-    .card-table {
-        min-height: 400px;
-    }
-
     .grid-wrapper {
          grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
 @media (max-width:450px) {
-    .card-table {
-        min-height: 300px;
-    }
-
     .grid-wrapper {
          grid-template-columns: 1fr;
     }

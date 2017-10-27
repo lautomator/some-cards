@@ -48,7 +48,7 @@ var someCardsApp = {
             // next row
             if (xPos < xThresh) {
                 xPos = -5;
-                yPos += yIncr;
+                yPos -= yIncr;
             }
             index += 1;
         }
@@ -186,21 +186,37 @@ var someCardsApp = {
         }
         return params;
     },
-    renderCard: function (target, template, card) {
+    renderCard: function (target, template, card, cardBgPos) {
         "use strict";
         // Renders card html <str>.
         // Takes in the html target <obj>,
         // template <str>, and card <obj>.
         // Returns false;
         var html = null;
+        var index = 0;
+        var len = cardBgPos.length;
+        var bgStyle = null;
+        var bgEl = null;
 
         html = template.replace(/%name%/gi, card.name);
         html = html.replace(/%suit%/gi, card.suit);
         html = html.replace("%id%", card.id);
         target.innerHTML += html;
+
+        // set the background image
+        while (index < len) {
+            if (cardBgPos[index][0] === card.id) {
+                bgStyle = cardBgPos[index][1];
+                break;
+            }
+            index += 1;
+        }
+        bgEl = document.getElementById(card.id);
+        bgEl.style.backgroundPosition = bgStyle;
+
         return false;
     },
-    renderHand: function (target, template, hand) {
+    renderHand: function (target, template, hand, cards) {
         "use strict";
         // Renders the HTML template and card data.
         // Takes in the html target <obj>,
@@ -212,7 +228,7 @@ var someCardsApp = {
 
         while (index < len) {
             card = hand[index];
-            this.renderCard(target, template, card);
+            this.renderCard(target, template, card, cards.cardBackgroundPos);
             index += 1;
         }
 
@@ -226,6 +242,9 @@ var someCardsApp = {
     },
     init: function () {
         "use strict";
+        // set up the background positions of the cards
+        this.cards.cardBackgroundPos = this.generateBgPos(this.cards.cardBackgroundPos);
+
         // Set min/max number of cards that can be
         // be entered on the form. Sets the max and
         // min attributes.
@@ -248,11 +267,12 @@ var someCardsApp = {
                 this.htmlTargets.status.style.visibility = "hidden";
             }
 
-            this.renderHand(this.htmlTargets.items, this.htmlTemplates.card, this.currentHand);
-
-            console.log(this.generateBgPos(this.cards.cardBackgroundPos));
+            this.renderHand(
+                this.htmlTargets.items,
+                this.htmlTemplates.card,
+                this.currentHand,
+                this.cards);
         }
-
         // NOTE: the cards should really shuffle and
         // utilize stack logic to simulate real play.
         // In this case, each hand is generated from a random
