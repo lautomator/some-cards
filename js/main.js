@@ -2,7 +2,8 @@ var someCardsApp = {
     cards: {
         deckSize: 52,
         names: ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"],
-        suits: ["hearts", "diamonds", "clubs", "spades"]
+        suits: ["hearts", "diamonds", "clubs", "spades"],
+        cardBackgroundPos: [["aceclubs", ""],["2clubs", ""],["3clubs", ""],["4clubs", ""],["5clubs", ""],["6clubs", ""],["7clubs", ""],["8clubs", ""],["9clubs", ""],["10clubs", ""],["jackclubs", ""],["queenclubs", ""],["kingclubs", ""],["acespades", ""],["2spades", ""],["3spades", ""],["4spades", ""],["5spades", ""],["6spades", ""],["7spades", ""],["8spades", ""],["9spades", ""],["10spades", ""],["jackspades", ""],["queenspades", ""],["kingspades", ""],["acehearts", ""],["2hearts", ""],["3hearts", ""],["4hearts", ""],["5hearts", ""],["6hearts", ""],["7hearts", ""],["8hearts", ""],["9hearts", ""],["10hearts", ""],["jackhearts", ""],["queenhearts", ""],["kinghearts", ""],["acediamonds", ""],["2diamonds", ""],["3diamonds", ""],["4diamonds", ""],["5diamonds", ""],["6diamonds", ""],["7diamonds", ""],["8diamonds", ""],["9diamonds", ""],["10diamonds", ""],["jackdiamonds", ""],["queendiamonds", ""],["kingdiamonds", ""]]
     },
     deck: null,
     currentHand: null,
@@ -16,6 +17,44 @@ var someCardsApp = {
         card: someCardsAppTemplates.card
     },
     status: "no data",
+    generateBgPos: function (cardsPos) {
+        // Designates the coordinates for
+        // the background position of the
+        // cards graphic.
+        // Takes in the card bg pos <array>.
+        // Returns the card bg positions
+        // with values <array>.
+        var index = 0;
+        var len = cardsPos.length;
+        var xPos = -5; // starting value
+        var yPos = -5; // starting value
+        var xIncr = 142;
+        var yIncr = 190;
+        var xThresh = -1709; // reset to next row
+        var template = "%x%px, %y%px";
+        var bgPos = cardsPos;
+
+        // populate data
+        while (index < len) {
+            template = template.replace("%x%", xPos);
+            template = template.replace("%y%", yPos);
+            bgPos[index][1] = template;
+
+            // reset
+            template = "%x%px, %y%px";
+
+            // increment
+            xPos -= xIncr;
+            // next row
+            if (xPos < xThresh) {
+                xPos = -5;
+                yPos += yIncr;
+            }
+            index += 1;
+        }
+        return bgPos;
+
+    },
     getRandomInt: function (min, max) {
         "use strict";
         // Returns a random number <int>.
@@ -157,6 +196,7 @@ var someCardsApp = {
 
         html = template.replace(/%name%/gi, card.name);
         html = html.replace(/%suit%/gi, card.suit);
+        html = html.replace("%id%", card.id);
         target.innerHTML += html;
         return false;
     },
@@ -209,6 +249,8 @@ var someCardsApp = {
             }
 
             this.renderHand(this.htmlTargets.items, this.htmlTemplates.card, this.currentHand);
+
+            console.log(this.generateBgPos(this.cards.cardBackgroundPos));
         }
 
         // NOTE: the cards should really shuffle and
