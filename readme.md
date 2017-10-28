@@ -1,5 +1,6 @@
 Deal Some Cards
 ===============
+```v0.1 alpha```
 
 I heard you wanted some cards. Well, here ya go!
 
@@ -15,7 +16,12 @@ Setup
 
 Development
 -----------
-If you edit `css/style.css` and/or `js/main.js`, use `grunt` to minify these files after editing. [Read the directions on setting up Grunt](https://gruntjs.com/). The Gruntfile with tasks is included in this VCS.
+If you edit `css/style.css` and/or `js/main.js`, use `grunt` to minify these files after editing. [Read the directions on setting up Grunt](https://gruntjs.com/). The Gruntfile with tasks is included in this VCS. You will also need these NPM Modules used with Grunt and they can be found on the [NPM website](https://www.npmjs.com/):
+
+* grunt-contrib-cssmin
+
+* grunt-contrib-uglify
+
 
 Changelog
 ---------

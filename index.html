@@ -31,7 +31,8 @@
             headEl: document.getElementsByTagName("head"),
             link: document.createElement("link"),
             bodyEl: document.getElementsByTagName("body"),
-            script: document.createElement("script")
+            script: document.createElement("script"),
+            dev: true
         };
         var someCardsAppTemplates = {
             card: '<div id="%id%" class="card"><div class="name-%name%">%name%</div><div class="suit-%suit%">%suit%</div></div>'
@@ -40,9 +41,15 @@
         // load styles and scripts
         someCardsAppTargets.link.rel = "stylesheet";
         someCardsAppTargets.link.type = "text/css";
-        someCardsAppTargets.link.href = "css/style.min.css?v=" + someCardsAppTargets.ver;
+
+        if (someCardsAppTargets.dev) {
+            someCardsAppTargets.link.href = "css/style.css?v=" + someCardsAppTargets.ver;
+            someCardsAppTargets.script.src = "js/main.js?v=" + someCardsAppTargets.ver;
+        } else {
+            someCardsAppTargets.link.href = "css/style.min.css?v=" + someCardsAppTargets.ver;
+            someCardsAppTargets.script.src = "js/main.min.js?v=" + someCardsAppTargets.ver;
+        }
         someCardsAppTargets.headEl[0].appendChild(someCardsAppTargets.link);
-        someCardsAppTargets.script.src = "js/main.min.js?v=" + someCardsAppTargets.ver;
         someCardsAppTargets.bodyEl[0].appendChild(someCardsAppTargets.script);
     </script>
 </body>

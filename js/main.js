@@ -1,9 +1,9 @@
 var someCardsApp = {
     cards: {
         deckSize: 52,
-        names: ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"],
+        names: ["ace", "02", "03", "04", "05", "06", "07", "08", "09", "10", "jack", "queen", "king"],
         suits: ["hearts", "diamonds", "clubs", "spades"],
-        cardBackgroundPos: [["aceclubs", ""],["2clubs", ""],["3clubs", ""],["4clubs", ""],["5clubs", ""],["6clubs", ""],["7clubs", ""],["8clubs", ""],["9clubs", ""],["10clubs", ""],["jackclubs", ""],["queenclubs", ""],["kingclubs", ""],["acespades", ""],["2spades", ""],["3spades", ""],["4spades", ""],["5spades", ""],["6spades", ""],["7spades", ""],["8spades", ""],["9spades", ""],["10spades", ""],["jackspades", ""],["queenspades", ""],["kingspades", ""],["acehearts", ""],["2hearts", ""],["3hearts", ""],["4hearts", ""],["5hearts", ""],["6hearts", ""],["7hearts", ""],["8hearts", ""],["9hearts", ""],["10hearts", ""],["jackhearts", ""],["queenhearts", ""],["kinghearts", ""],["acediamonds", ""],["2diamonds", ""],["3diamonds", ""],["4diamonds", ""],["5diamonds", ""],["6diamonds", ""],["7diamonds", ""],["8diamonds", ""],["9diamonds", ""],["10diamonds", ""],["jackdiamonds", ""],["queendiamonds", ""],["kingdiamonds", ""]]
+        cardBackgroundPos: []
     },
     deck: null,
     currentHand: null,
@@ -17,7 +17,68 @@ var someCardsApp = {
         card: someCardsAppTemplates.card
     },
     status: "no data",
-    generateBgPos: function (cardsPos) {
+    sortBgImages: function (bgs) {
+        // Sorts the bgs <array> in
+        // accordance with the bg image.
+        // Returns the sorted bgs <array>
+        // Sort order is thus:
+        // Clubs:       ace -> king
+        // Spades:      ace -> king
+        // Hearts:      ace -> king
+        // Diamonds:    ace -> king
+        var index = 0;
+        var len = bgs.length;
+        var idSplit = [];
+        var clubs = [];
+        var spades = [];
+        var hearts = [];
+        var diamonds = [];
+        var bgsSorted = [];
+
+        while (index < len) {
+            idSplit = bgs[index][0].split("-");
+            if (idSplit[1] === "clubs") {
+                clubs.push(bgs[index]);
+            } else if (idSplit[1] === "spades") {
+                spades.push(bgs[index]);
+            }  else if (idSplit[1] === "hearts") {
+                hearts.push(bgs[index]);
+            } else {
+                diamonds.push(bgs[index]);
+            }
+            index += 1;
+        }
+
+        bgsSorted.push(clubs.sort());
+        bgsSorted.push(spades.sort());
+        bgsSorted.push(hearts.sort());
+        bgsSorted.push(diamonds.sort());
+
+        return bgsSorted;
+    },
+    generateBgPosIDs: function (deck) {
+        // Adds the card IDs to the
+        // cardBackgroundPos dataset.
+        // Takes in the cards background pos
+        // dataset <array> and the deck <array>.
+        // Returns and updated background pos
+        // dataset <array>.
+        var index = 0;
+        var len = deck.length;
+        var bgs = [];
+
+        // Cycle through the deck and get
+        // the ids. Add them to the bgs dataset.
+        while (index < len) {
+            bgs.push([deck[index].id, ""]);
+            index += 1;
+        }
+
+        // sort
+        bgs = this.sortBgImages(bgs);
+        return bgs;
+    },
+    generateBgPos: function (cards) {
         // Designates the coordinates for
         // the background position of the
         // cards graphic.
@@ -25,14 +86,14 @@ var someCardsApp = {
         // Returns the card bg positions
         // with values <array>.
         var index = 0;
-        var len = cardsPos.length;
+        var len = cards.cardBackgroundPos.length;
         var xPos = -5; // starting value
         var yPos = -5; // starting value
         var xIncr = 142;
         var yIncr = 190;
         var xThresh = -1709; // reset to next row
         var template = "%x%px, %y%px";
-        var bgPos = cardsPos;
+        var bgPos = cards.cardBackgroundPos;
 
         // populate data
         while (index < len) {
@@ -100,7 +161,7 @@ var someCardsApp = {
 
         card.name = cards.names[rN];
         card.suit = cards.suits[rS];
-        card.id = card.name + card.suit;
+        card.id = card.name + "-" + card.suit;
 
         return card;
     },
@@ -242,8 +303,15 @@ var someCardsApp = {
     },
     init: function () {
         "use strict";
+        // define the deck of cards
+        this.deck = this.generateDeck(this.cards.deckSize);
+
+        // generate dataset for bg positions
+        this.cards.cardBackgroundPos = this.generateBgPosIDs(this.deck);
+        console.log(this.cards.cardBackgroundPos);
+
         // set up the background positions of the cards
-        this.cards.cardBackgroundPos = this.generateBgPos(this.cards.cardBackgroundPos);
+        // this.cards.cardBackgroundPos = this.generateBgPos(this.cards, this.deck);
 
         // Set min/max number of cards that can be
         // be entered on the form. Sets the max and
@@ -255,9 +323,6 @@ var someCardsApp = {
         if (window.location.search !== "") {
             // process the form data
             var handSize = this.getFormInput(window.location.search.substr(1));
-
-            // define the deck of cards
-            this.deck = this.generateDeck(this.cards.deckSize);
 
             // define the current hand
             this.currentHand = this.generateHand(this.deck, handSize.numberOfCards);
