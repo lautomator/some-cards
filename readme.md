@@ -16,14 +16,19 @@ Setup
 
 Development
 -----------
-If you edit `css/style.css` and/or `js/main.js`, use `grunt` to minify these files after editing. [Read the directions on setting up Grunt](https://gruntjs.com/). The Gruntfile with tasks is included in this VCS. You will also need these NPM Modules used with Grunt and they can be found on the [NPM website](https://www.npmjs.com/):
+Change the var someCardsAppTargets.dev in `index.html` to true when working in development to ensure active cache busters on the script and css. Change if to false for production.
+
+You will not need to `Grunt` while working in development.
+
+
+Production
+----------
+
+Set the var someCardsAppTargets.dev to true and use Grunt to minify the script and css. If you edit `css/style.css` and/or `js/main.js`, use `grunt` to minify these files after editing. [Read the directions on setting up Grunt](https://gruntjs.com/). The Gruntfile with tasks is included in this VCS. You will also need these NPM Modules used with Grunt and they can be found on the [NPM website](https://www.npmjs.com/):
 
 * grunt-contrib-cssmin
 
 * grunt-contrib-uglify
-
-Change the var someCardsAppTargets.dev in `index.html` to true when working in development to ensure active cache busters on the script and css. Change if to false for production.
-
 
 Changelog
 ---------

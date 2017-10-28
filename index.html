@@ -23,7 +23,8 @@
 
     <script type="text/javascript">
         var someCardsAppTargets = {
-            ver: Math.random(),
+            verDev: Math.random(),
+            verProd: "2017-10-28",
             items: document.getElementById("items"),
             status: document.getElementById("status"),
             noOfCardsIn: document.getElementById("noOfCardsIn"),
@@ -43,11 +44,11 @@
         someCardsAppTargets.link.type = "text/css";
 
         if (someCardsAppTargets.dev) {
-            someCardsAppTargets.link.href = "css/style.css?v=" + someCardsAppTargets.ver;
-            someCardsAppTargets.script.src = "js/main.js?v=" + someCardsAppTargets.ver;
+            someCardsAppTargets.link.href = "css/style.css?v=" + someCardsAppTargets.verDev;
+            someCardsAppTargets.script.src = "js/main.js?v=" + someCardsAppTargets.verDev;
         } else {
-            someCardsAppTargets.link.href = "css/style.min.css?v=" + someCardsAppTargets.ver;
-            someCardsAppTargets.script.src = "js/main.min.js?v=" + someCardsAppTargets.ver;
+            someCardsAppTargets.link.href = "css/style.min.css?v=" + someCardsAppTargets.verProd;
+            someCardsAppTargets.script.src = "js/main.min.js?v=" + someCardsAppTargets.verProd;
         }
         someCardsAppTargets.headEl[0].appendChild(someCardsAppTargets.link);
         someCardsAppTargets.bodyEl[0].appendChild(someCardsAppTargets.script);
