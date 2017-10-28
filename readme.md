@@ -22,6 +22,8 @@ If you edit `css/style.css` and/or `js/main.js`, use `grunt` to minify these fil
 
 * grunt-contrib-uglify
 
+Change the var someCardsAppTargets.dev in `index.html` to true when working in development to ensure active cache busters on the script and css. Change if to false for production.
+
 
 Changelog
 ---------
