@@ -18,6 +18,7 @@ var someCardsApp = {
     },
     status: "no data",
     sortBgImages: function (bgs) {
+        "use strict";
         // Sorts the bgs <array> in
         // accordance with the bg image.
         // Returns the sorted bgs <array>
@@ -99,6 +100,7 @@ var someCardsApp = {
         return bgsSorted;
     },
     generateBgPosIDs: function (deck) {
+        "use strict";
         // Adds the card IDs to the
         // cardBackgroundPos dataset.
         // Takes in the cards background pos
@@ -121,6 +123,7 @@ var someCardsApp = {
         return bgs;
     },
     generateBgPos: function (cards) {
+        "use strict";
         // Designates the coordinates for
         // the background position of the
         // cards graphic.
@@ -134,7 +137,7 @@ var someCardsApp = {
         var xIncr = 142;
         var yIncr = 190;
         var xThresh = -1709; // reset to next row
-        var template = "%x%px, %y%px";
+        var template = "%x%px %y%px";
         var bgPos = cards.cardBackgroundPos;
 
         // populate data
@@ -144,7 +147,7 @@ var someCardsApp = {
             bgPos[index][1] = template;
 
             // reset
-            template = "%x%px, %y%px";
+            template = "%x%px %y%px";
 
             // increment
             xPos -= xIncr;
@@ -350,7 +353,6 @@ var someCardsApp = {
 
         // generate dataset for bg positions
         this.cards.cardBackgroundPos = this.generateBgPosIDs(this.deck);
-        console.log(this.cards.cardBackgroundPos);
 
         // set up the background positions of the cards
         this.cards.cardBackgroundPos = this.generateBgPos(this.cards, this.deck);

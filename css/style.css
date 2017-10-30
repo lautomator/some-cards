@@ -28,7 +28,7 @@ body {
 .card {
     /*background: no-repeat -5px -5px/1394% url("../img/cards.png");*/
     background-color: #ffffff;
-    background-image: url("../img/cards.png");
+    background-image: url("../img/cards.png?v=20171030-1");
     background-size: 1394%;
     background-repeat: no-repeat;
     border: 1px dotted #000;
@@ -37,6 +37,12 @@ body {
     margin: 5px 0;
     padding: 4px;
     width: 125px;
+}
+
+.card div {
+    display: none;
+    /*reveal names*/
+    /*display: block;*/
 }
 
 

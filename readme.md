@@ -1,6 +1,6 @@
 Deal Some Cards
 ===============
-```v0.1 alpha```
+```v1.0```
 
 I heard you wanted some cards. Well, here ya go!
 
@@ -35,3 +35,6 @@ Changelog
 
 2017-10-28
 v0.1 alpha (in development)
+
+2017-10-30
+v1.0
