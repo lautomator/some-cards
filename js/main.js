@@ -35,6 +35,7 @@ var someCardsApp = {
         var diamonds = [];
         var bgsSorted = [];
 
+        // sort by the suit
         while (index < len) {
             idSplit = bgs[index][0].split("-");
             if (idSplit[1] === "clubs") {
@@ -49,10 +50,51 @@ var someCardsApp = {
             index += 1;
         }
 
-        bgsSorted.push(clubs.sort());
-        bgsSorted.push(spades.sort());
-        bgsSorted.push(hearts.sort());
-        bgsSorted.push(diamonds.sort());
+        // sort buy the card number
+        clubs.sort();
+        spades.sort();
+        hearts.sort();
+        diamonds.sort();
+
+        // correct the sort (move the Ace and King)
+        clubs.unshift(clubs[9]);
+        clubs.splice(10, 1);
+        clubs.push(clubs[11]);
+        clubs.splice(11, 1);
+        spades.unshift(spades[9]);
+        spades.splice(10, 1);
+        spades.push(spades[11]);
+        spades.splice(11, 1);
+        hearts.unshift(hearts[9]);
+        hearts.splice(10, 1);
+        hearts.push(hearts[11]);
+        hearts.splice(11, 1);
+        diamonds.unshift(diamonds[9]);
+        diamonds.splice(10, 1);
+        diamonds.push(diamonds[11]);
+        diamonds.splice(11, 1);
+
+        // define the final array
+        index = 0;
+        while (index < clubs.length) {
+            bgsSorted.push(clubs[index]);
+            index += 1;
+        }
+        index = 0;
+        while (index < spades.length) {
+            bgsSorted.push(spades[index]);
+            index += 1;
+        }
+        index = 0;
+        while (index < hearts.length) {
+            bgsSorted.push(hearts[index]);
+            index += 1;
+        }
+        index = 0;
+        while (index < diamonds.length) {
+            bgsSorted.push(diamonds[index]);
+            index += 1;
+        }
 
         return bgsSorted;
     },
@@ -311,7 +353,7 @@ var someCardsApp = {
         console.log(this.cards.cardBackgroundPos);
 
         // set up the background positions of the cards
-        // this.cards.cardBackgroundPos = this.generateBgPos(this.cards, this.deck);
+        this.cards.cardBackgroundPos = this.generateBgPos(this.cards, this.deck);
 
         // Set min/max number of cards that can be
         // be entered on the form. Sets the max and
