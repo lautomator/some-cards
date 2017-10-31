@@ -1,4 +1,28 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Some Cards</title></head><body><div class="wrapper"><p id="status">How many cards do you want?</p><div class="control-panel"><form method="GET" action="/"><input id="noOfCardsIn" type="number" name="no_of_cards" placeholder="Number of cards" required> <input type="submit" value="deal"> <input id="reset" type="button" value="reset"></form></div><hr><div class="card-table"><div id="items" class="grid-wrapper"></div></div><hr></div><script type="text/javascript">// params
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Some Cards</title>
+</head>
+<body>
+    <div class="wrapper">
+        <p id="status">How many cards do you want?</p>
+        <div class="control-panel">
+            <form method="GET" action="/">
+                <input id="noOfCardsIn" type="number" name="no_of_cards" placeholder="Number of cards" required>
+                <input type="submit" value="deal">
+                <input id="reset" type="button" value="reset">
+            </form>
+        </div>
+        <hr>
+        <div class="card-table">
+            <div id="items" class="grid-wrapper"></div>
+        </div>
+        <hr>
+    </div>
+
+    <script type="text/javascript">
+        // params
         someCardsAppParams = {
             verDev: Math.random(),
             verProd: "2017-10-30",
@@ -39,4 +63,8 @@
         }
 
         someCardsAppTargets.headEl[0].appendChild(someCardsAppTargets.link);
-        someCardsAppTargets.bodyEl[0].appendChild(someCardsAppTargets.script);</script></body></html>
+        someCardsAppTargets.bodyEl[0].appendChild(someCardsAppTargets.script);
+    </script>
+</body>
+</html>
+
