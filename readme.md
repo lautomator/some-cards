@@ -6,19 +6,21 @@ I heard you wanted some cards. Well, here ya go!
 
 This simple web app prompts users to enter the number of cards they want dealt from a standard deck of 52 cards. The backend uses native javascript.
 
-Not interesting enough? You can always put things into perspective by reading [this article](https://www.landofthebrave.info/colonial-life.htm).
+Not interesting enough? You can always put things into perspective by reading [this article](https://www.allabouthistory.org/colonial-life-in-america.htm).
 
 Setup
 -----
 * Clone or fork this repository.
 
-* Use Python's HTTP server on the command line: cd into this directory and use the command `python -m SimpleHTTPServer 9000`. Or, you can open `index.html` from your browser.
+* Use Python's HTTP server on the command line: cd into `public_html` and use the command `python -m SimpleHTTPServer 9000`. Or, you can open `public_html/index.html` from your browser.
 
 Development
 -----------
-Change the var someCardsAppTargets.dev in `index.html` to true when working in development to ensure active cache busters on the script and css. Change if to false for production.
+Change the var `someCardsAppTargets.inDev` in `index.html` to true when working in development to ensure active cache busters on the script and css. Change if to false for production.
 
-You will not need to `Grunt` while working in development.
+Only edit the files in `src/`.
+
+`grunt` whenever you have made changes to any of the files.
 
 
 Production
@@ -30,11 +32,17 @@ Set the var someCardsAppTargets.dev to true and use Grunt to minify the script a
 
 * grunt-contrib-uglify
 
+* grunt-contrib-htmlmin
+
 Changelog
 ---------
 
-2017-10-28
-v0.1 alpha (in development)
+2017-10-31
+v1.1
+New Development Environment
 
 2017-10-30
 v1.0
+
+2017-10-28
+v0.1 alpha (in development)

@@ -7,6 +7,9 @@ var someCardsApp = {
     },
     deck: null,
     currentHand: null,
+    params: {
+    	ver: someCardsAppParams.ver
+    },
     htmlTargets: {
         items: someCardsAppTargets.items,
         status: someCardsAppTargets.status,
@@ -292,6 +295,13 @@ var someCardsApp = {
         }
         return params;
     },
+    renderFooter: function (v) {
+    	"use strict";
+    	// Takes in the version number <str>
+    	var footerEl = someCardsAppTargets.footerEl;
+    	footerEl.innerHTML = v;
+
+    },
     renderCard: function (target, template, card, cardBgPos) {
         "use strict";
         // Renders card html <str>.
@@ -362,6 +372,9 @@ var someCardsApp = {
         // min attributes.
         this.htmlTargets.noOfCardsIn.setAttribute("min", "1");
         this.htmlTargets.noOfCardsIn.setAttribute("max", this.cards.deckSize);
+
+        // set the footer
+        this.renderFooter(this.params.ver);
 
         // retrieve any GET params
         if (window.location.search !== "") {

@@ -45,6 +45,10 @@ body {
     /*display: block;*/
 }
 
+#version {
+	font-style: italic;
+}
+
 
 @media (max-width:768px) {
     body {

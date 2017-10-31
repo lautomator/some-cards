@@ -8,9 +8,9 @@ module.exports = function(grunt) {
             target: {
                 files: [{
                     expand: true,
-                    cwd: 'css/',
+                    cwd: 'src/',
                     src: ['*.css', '!*.min.css'],
-                    dest: 'css/',
+                    dest: 'public_html/css/',
                     ext: '.min.css'
                 }]
             }
@@ -19,7 +19,8 @@ module.exports = function(grunt) {
         uglify: {
             my_target: {
                 files: {
-                    'js/main.min.js': ['js/main.js']
+                    'public_html/js/main.min.js': ['src/main.js'],
+                    'public_html/js/init.min.js': ['src/init.js']
                 }
             }
         },
@@ -27,11 +28,11 @@ module.exports = function(grunt) {
         htmlmin: {
             dist: {
                 options: {
-                    removeComments: false,
+                    removeComments: true,
                     collapseWhitespace: true
                 },
                 files: {
-                    'index.html': 'src/index.html'
+                    'public_html/index.html': 'src/index.html'
                 }
             }
         }
