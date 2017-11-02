@@ -14,14 +14,15 @@ Setup
 
 * Use Python's HTTP server on the command line: cd into `public_html` and use the command `python -m SimpleHTTPServer 9000`. Or, you can open `public_html/index.html` from your browser.
 
+* Optionally, you can use [Vagrant](https://www.vagrantup.com/)/. The Vagrantfile is included in this repository.
+
 Development
 -----------
 Change the var `someCardsAppTargets.inDev` in `index.html` to true when working in development to ensure active cache busters on the script and css. Change if to false for production.
 
 Only edit the files in `src/`.
 
-`grunt` whenever you have made changes to any of the files.
-
+`grunt` whenever you have made changes to any of the files in `src`. See the Production section regarding Grunt.
 
 Production
 ----------
